@@ -28,6 +28,8 @@ npm run dev
 
 ## Type-Check, Compile and Minify for Production
 
+Put "Public" folder into your Filezilla to host 
+
 ```sh
 npm run build
 ```
