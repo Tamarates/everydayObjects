@@ -1,17 +1,47 @@
 @import './base.css';
 
+@font-face {
+  font-family: 'Lexend Deca';
+  src: url('./fonts/LexendDeca-Regular.ttf') format('truetype'); /* TTF como respaldo */
+  font-weight: normal; /* O '400' si prefieres */
+  font-style: normal;
+}
+
+html, body {
+  height: 100%;  /* La altura total debe ocupar el 100% de la ventana */
+  margin: 0;
+  padding: 0; 
+  font-family: 'Lexend Deca', sans-serif !important;
+}
+
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  display: flex;
+  flex-direction: column; /* El contenido se apila verticalmente */
+  height: 100%;  /* Esto asegura que el contenedor ocupe toda la altura de la ventana */
+}
+
+.background {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;  /* El contenido ocupará el espacio restante */
+  overflow: hidden;  /* Evita que el contenido se desborde */
+  background-image: url('/src/utils/assets/images/background.svg'); /* Asegúrate de que la ruta sea correcta */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mdb-navbar {
+  width: 100%;  /* Asegura que el navbar ocupe el 100% de ancho */
+  height: auto;  /* Asegura que el navbar se ajuste al contenido */
+  flex-shrink: 0; /* Evita que el navbar se encoja si hay poco contenido */
 }
 
 a,
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
+  transition: background-color 0.4s;
   padding: 3px;
 }
 
@@ -22,14 +52,40 @@ a,
 }
 
 @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
   #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    display: flexbox;
+    padding: 0 0rem;
   }
+}
+
+/* Asegúrate de que el navbar y el contenido no tengan conflictos */
+.container-fluid {
+  padding: 0 !important; 
+  margin: 0;/* Elimina cualquier padding que interfiera con el layout */
+}
+
+.font-regular-18{
+  font-family: 'Lexend Deca';
+  font-size: 18px;
+}
+
+.font-regular-white-38{
+  font-family: 'Lexend Deca';
+  font-size: 38px;
+  color: white;
+}
+
+.font-regular-white-14{
+  font-family: 'Lexend Deca';
+  font-size: 14px;
+  color: white;
+  text-align: start;
+}
+
+.font-thin-white-14{
+  font-family: 'Lexend Deca';
+  font-size: 12px;
+  color: white;
+  text-align: start;
+  font-weight: 100;
 }

@@ -1,47 +1,45 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+<template id="app">
+  <MDBContainer fluid class="background">
+    <Navbar></Navbar>
+    <router-view></router-view>
+  </MDBContainer>
 </template>
 
+<script>
+import Navbar from './utils/Navbar.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Navbar,
+  }
+}
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
+/* Asegura que html y body ocupen el 100% de la altura */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+#app {
+  font-family: Avenir, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* El contenedor principal ocupa al menos el 100% del viewport */
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+/* Fondo ocupa el espacio disponible y crece con el contenido */
+.background {
+  background-image: url('/src/utils/assets/images/background.svg'); /* Ajusta la ruta si es necesario */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; /* Asegura que el fondo llene el viewport y crezca según el contenido */
 }
 </style>
