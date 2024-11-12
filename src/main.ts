@@ -4,6 +4,8 @@ import router from './router';
 import App from './App.vue';
 import { createApp } from 'vue'
 
+import axios from 'axios';
+
 import 'mdb-vue-ui-kit/css/mdb.min.css';
 import '@fontsource/lexend-deca';
 
@@ -31,6 +33,9 @@ app.component('MDBCardBody', MDBCardBody);
 app.component('MDBCardTitle', MDBCardTitle)
 app.component('MDBCardText', MDBCardText)
 app.component('MDBIcon', MDBIcon)
+
+
+app.config.globalProperties.axios = axios;
 
 app.use(router);
 app.mount('#app');

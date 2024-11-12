@@ -13,7 +13,7 @@
                 </MDBCol>
                 <MDBCol col="4">
                   <div class="custom-select-container">
-                    <select class="custom-select">
+                    <select class="custom-select" v-model="selectedOption" @change="updateMaterialLists">
                       <option value="" disabled selected>Seleccionar</option>
                       <option v-for="(option, index) in options" :key="index" :value="option.value">
                         {{ option.label }}
@@ -25,29 +25,46 @@
 
               <MDBRow class="mt-5 pt-4">
                 <MDBCol col="6" class="d-flex justify-content-center align-items-center">
-                  <img class="pencil" src="/src/utils/assets/images/lapiz.png" alt="Imagen de lápiz" />
+                  <img class="pencil" src="/src/utils/assets/images/lapiz.png" />
                 </MDBCol>
                 <MDBCol col="6">
                   <div class="material-container">
                     <h5 class="material-title mb-4">Materiales</h5>
+
+                    <!-- Mostrar materiales solo si hay materialKey disponible -->
                     <MDBRow v-for="(label, index) in materialKey" :key="index" class="mb-3 align-items-center">
-                      <MDBCol class="text-right mb-3" :class="index === materialKey.length - 1 ? 'col-8 mt-5' : '4'">
-                        <label :for="'material' + index" :class="index === materialKey.length - 1 ? 'font-thin-white-14' : ''">
+                      <MDBCol col="4" class="text-right mb-3">
+                        <label>
                           {{ label }}
                         </label>
                       </MDBCol>
-                      <MDBCol class="mb-3" :class="index === materialKey.length - 1 ? 'col-3 mt-5' : '8'">
-                        <select :id="'material' + index" class="custom-select" :value="index === materialKey.length - 1 ? '1' : ''">
-                          <option v-if="index !== materialKey.length - 1" value="" disabled selected>Seleccionar</option>
-                          <option v-if="index === materialKey.length - 1" v-for="num in 10" :key="num" :value="num">
-                            {{ num }}
+                      <MDBCol col="7" class="mb-3">
+                        <!-- Selección de materiales basada en materialLists, solo si selectedOption es válido -->
+                        <select :id="'material' + index" class="custom-select" v-model="selectedMaterials[index]">
+                          <option v-if="selectedOption && materialLists[selectedOption]" 
+                                  v-for="(material, idx) in materialLists[selectedOption][index]" 
+                                  :key="idx" 
+                                  :value="material.value">
+                            {{ material.label }}
                           </option>
-                          <option v-else v-for="(option, idx) in options" :key="idx" :value="option.value">
-                            {{ option.label }}
-                          </option>
+                          <!-- Mostrar un mensaje si no hay materiales disponibles -->
+                          <option v-else disabled>No hay materiales disponibles</option>
                         </select>
                       </MDBCol>
                     </MDBRow>
+
+                    <!-- Select numérico para la cantidad de objetos a crear -->
+                    <MDBRow class="mb-3 align-items-center">
+                      <MDBCol class="text-right mb-3 col-8">
+                        <label for="cantidad" class="font-thin-white-14">Cantidad de objetos a crear</label>
+                      </MDBCol>
+                      <MDBCol class="mb-3 col-3">
+                        <select id="cantidad" class="custom-select" v-model="cantidad">
+                          <option v-for="n in 100" :key="n" :value="n">{{ n }}</option>
+                        </select>
+                      </MDBCol>
+                    </MDBRow>
+
                   </div>
                 </MDBCol>
               </MDBRow>
@@ -58,10 +75,10 @@
                 </MDBCol>
                 <MDBCol col="6">
                   <div class="custom-select-container">
-                    <select class="custom-select">
+                    <select class="custom-select" v-model="citySelected">
                       <option value="" disabled selected>Seleccionar</option>
-                      <option v-for="(option, index) in options" :key="index" :value="option.value">
-                        {{ option.label }}
+                      <option v-for="(city, index) in citiesList" :key="index" :value="city.value">
+                        {{ city.label }}
                       </option>
                     </select>
                   </div>
@@ -83,35 +100,56 @@
                 <label class="font-thin-white-14 pt-1">Volver</label>
               </MDBBtn>
               <div class="material-container text-center">
-                <h5 class="material-title ">IMPACTO</h5>
-                <span class="font-thin-white-14 text-center" >per kg de producto</span>
+                <h5 class="material-title">IMPACTO</h5>
+                <span class="font-thin-white-14 text-center">por kg de producto</span>
               </div>
-              <MDBRow class="mt-4 ">
+              <MDBRow class="mt-4">
                 <MDBCol col="6" class="d-flex justify-content-center align-items-center">
                   <img class="pencil" src="/src/utils/assets/images/lapiz.png" alt="Imagen de lápiz" />
                 </MDBCol>
                 <MDBCol col="6">
                   <div>
                     <h5 class="material-title text-start">Producción</h5>
-                    <MDBRow v-for="(label, index) in production" :key="index" class="mb-3 ">
-                      <MDBCol class="d-flex justify-content-start">
-                        <label :for="'production' + index" class="font-thin-white-14">{{ label }}</label>
-                      </MDBCol>
-                    </MDBRow>
-                  </div>
+                    <!-- <MDBRow v-for="(label, index) in production" :key="index" class="mb-3"> -->
+                      <MDBRow>
+                        <MDBCol col="12" class="d-flex justify-content-start mb-3">
+                          <!-- <label :for="'production' + index" class="font-thin-white-14">{{ label }}</label> -->
+                          <label class="font-thin-white-14" for="">Huella de Carbono 6.789 Kg</label>
+                        </MDBCol>
+                        <MDBCol col="12">
+                          <label class="font-thin-white-14 mb-3" for="">Huella Hídrica 111.254 Lt</label>
+                        </MDBCol>
+                        <MDBCol  col="12">
+                          <label class="font-thin-white-14 mb-3">Diesel 1.046 Lt</label>
+                        </MDBCol>
+                      </MDBRow>
+                    </div>
                   <div>
                     <h5 class="material-title text-start">Envios</h5>
-                    <MDBRow v-for="(label, index) in envios" :key="index" class="mb-3 ">
-                      <MDBCol class="d-flex justify-content-start">
-                        <label :for="'envios' + index" class="font-thin-white-14">{{ label }}</label>
+                    <!-- <MDBRow v-for="(label, index) in envios" :key="index" class="mb-3"> -->
+                      <MDBRow >  
+                        <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
+                        <!-- <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label> -->
+                         Co2 0.075 Kg
+                      </MDBCol>
+                      <MDBCol  col="12">
+                        <label class="font-thin-white-14 mb-3">Diesel 0.028 Lt</label>
                       </MDBCol>
                     </MDBRow>
                   </div>
                   <div>
                     <h5 class="material-title text-start">Total</h5>
-                    <MDBRow v-for="(label, index) in total" :key="index" class="mb-3 ">
-                      <MDBCol class="d-flex justify-content-start">
-                        <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label>
+                    <!-- <MDBRow v-for="(label, index) in total" :key="index" class="mb-3"> -->
+                    <MDBRow>
+                      <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
+                        <!-- <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label> -->
+                         Co2 6.864 Kg
+                      </MDBCol>
+                      <MDBCol  col="12">
+                        <label class="font-thin-white-14 mb-3">Diesel 1.074 Lt</label>
+                      </MDBCol>
+                      <MDBCol  col="12">
+                        <label class="font-thin-white-14 mb-3">Huella Hídrica 111.254 Lt</label>
                       </MDBCol>
                     </MDBRow>
                   </div>
@@ -125,35 +163,72 @@
   </MDBContainer>
 </template>
 
-
 <script>
 export default {
   name: 'CreateComponent',
   data() {
     return {
       options: [
-        { value: 'option1', label: 'Opción 1' },
-        { value: 'option2', label: 'Opción 2' },
-        { value: 'option3', label: 'Opción 3' },
+        { value: 'lapiz', label: 'Lápiz' },
+        { value: 'bicicleta', label: 'Bicicleta' },
+        { value: 'audifono', label: 'Audífono' },
       ],
-      materialKey: ['Cuerpo', 'Detalles 1', 'Detalles 2', 'Detalles 3', 'Cantidad de objetos a crear'],
-      production: ['Co2e', 'Huella Hidrica', 'Diesel'],
-      envios: ['Co2e', 'Diesel'],
-      total: ['Co2e', 'Huella Hidrica', 'Diesel'],
+      selectedOption: null,
+      selectedMaterials: [],
+      materialKey: ['Cuerpo', 'Detalles 1', 'Detalles 2', 'Detalles 3'],
+      materialLists: {
+        lapiz: [
+          [{ label: 'Pvc', value: 'pvc' }, { label: 'Acero inoxidable', value: 'AI' }, { label: 'Polipropileno', value: 'poli' }, { label: 'Aluminio', value: 'AI' }, { label: 'Madera', value: 'AI' }],
+          [{ label: 'Tinta', value: 'tinta' }, { label: 'Grafito', value: 'grafito' },  { label: 'Arcilla', value: 'arcilla' }],
+          [{ label: 'Caucho', value: 'caucho' }, { label: 'Silicona', value: 'silicona' }],
+          ,
+
+        ],
+        bicicleta: [
+          [{ label: 'Acero', value: 'acero' }, { label: 'Aluminio', value: 'aluminio' }, { label: 'Fibra de carbono', value: 'FC' }, { label: 'Titanio', value: 'Titanio' }],
+          [{ label: 'Nylon', value: 'nylon' }, { label: 'Aluminio', value: 'aluminio' }, { label: 'Acero', value: 'acero' }],
+          [{ label: 'Caucho', value: 'caucho' }, { label: 'Gomas', value: 'gomas' }],
+          [],
+        ],
+        audifono: [
+          [{ label: 'Aluminio', value: 'aluminio' }, { label: 'Cobre', value: 'cobre' },{ label: 'ABS', value: 'abs' }],
+          [{ label: 'Espuma', value: 'espuma' }, { label: 'Cuero sintético', value: 'cs' }, { label: 'Goma (Latex) ', value: 'goma' }],
+            ],
+      },
+      citySelected: '',
+      citiesList: [
+      { value: 'santiago', label: 'Santiago' },
+      { value: 'valparaiso', label: 'Valparaíso' },
+      { value: 'concepcion', label: 'Concepción' },
+      { value: 'la_serena', label: 'La Serena' },
+      { value: 'antofagasta', label: 'Antofagasta' },
+      { value: 'temuco', label: 'Temuco' },
+      { value: 'iquique', label: 'Iquique' },
+      { value: 'puerto_montt', label: 'Puerto Montt' },
+      { value: 'rancagua', label: 'Rancagua' },
+      { value: 'arica', label: 'Arica' },
+      { value: 'talca', label: 'Talca' },
+      { value: 'punta_arenas', label: 'Punta Arenas' }
+    ],
       created: false,
     };
   },
   methods: {
+    updateMaterialLists() {
+      // Actualiza las opciones de materiales solo si una opción es seleccionada
+      if (this.selectedOption) {
+        this.selectedMaterials = new Array(this.materialKey.length).fill(null);
+      }
+    },
     goToCreate() {
       this.created = true;
     },
-    goToBack(){
+    goToBack() {
       this.created = false;
-    }
+    },
   },
 };
 </script>
-
 
 <style scoped>
 .map-container {
