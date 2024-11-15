@@ -8,6 +8,9 @@ export default defineConfig({
   css: {
     devSourcemap: true,
   },
+  server: {
+    host: true,
+  },
   plugins: [
     vue(),
   ],
