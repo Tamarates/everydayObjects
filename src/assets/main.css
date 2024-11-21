@@ -2,9 +2,27 @@
 
 @font-face {
   font-family: 'Lexend Deca';
-  src: url('./fonts/LexendDeca-Regular.ttf') format('truetype'); /* TTF como respaldo */
-  font-weight: normal; /* O '400' si prefieres */
-  font-style: normal;
+  src: url('../utils/assets/fonts/LexendDeca-Regular.ttf') format('truetype'); /* TTF como respaldo */
+}
+
+@font-face {
+  font-family: 'Lexend Deca Thin';
+  src: url('../utils/assets/fonts/LexendDeca-Thin.ttf') format('truetype')
+}
+
+@font-face {
+  font-family: 'Lexend Deca Light';
+  src: url('../utils/assets/fonts/LexendDeca-Light.ttf') format('truetype')
+}
+
+@font-face {
+  font-family: 'Lexend Deca ExtraLight';
+  src: url('../utils/assets/fonts/LexendDeca-Light.ttf') format('truetype')
+}
+
+@font-face {
+  font-family: 'Lexend Deca Medium';
+  src: url('../utils/assets/fonts/LexendDeca-Medium.ttf') format('truetype')
 }
 
 html, body {
@@ -58,21 +76,19 @@ a,
   }
 }
 
-/* Asegúrate de que el navbar y el contenido no tengan conflictos */
-.container-fluid {
-  padding: 0 !important; 
-  margin: 0;/* Elimina cualquier padding que interfiera con el layout */
+
+/* REGULAR */
+.font-regular-white-14{
+  font-family: 'Lexend Deca';
+  font-size: 14px;
+  color: white;
+  text-align: start;
 }
+
 
 .font-regular-18{
   font-family: 'Lexend Deca';
   font-size: 18px;
-}
-
-.font-regular-white-38{
-  font-family: 'Lexend Deca';
-  font-size: 38px;
-  color: white;
 }
 
 .font-regular-white-20{
@@ -82,17 +98,87 @@ a,
   font-style: normal;
 }
 
-.font-regular-white-14{
-  font-family: 'Lexend Deca';
-  font-size: 14px;
-  color: white;
-  text-align: start;
+.font-regular-blue-20{
+  font-family: 'Lexend Deca' !important;
+  font-size: 20px;
+  color: #4E62E2 !important;
+  text-transform: uppercase;
 }
 
-.font-thin-white-14{
+.font-regular-white-38{
   font-family: 'Lexend Deca';
-  font-size: 12px;
+  font-size: 38px;
   color: white;
-  text-align: start;
+}
+
+/* MEDIUM */
+.font-medium-blue-20{
+  font-family: 'Lexend Deca Medium';
+  font-size: 20px;
+  color: #4E62E2;
+}
+
+
+/* THIN */
+
+.font-thin-white-14{
+  font-family: 'Lexend Deca Thin';
+  font-size: 14px;
+  color: white; 
+}
+
+
+
+.font-thin-white-18{
+  font-family: 'Lexend Deca Thin';
+  font-size: 18px;
+  color: white; 
+}
+
+.font-thin-blue-40{
+  font-family: 'Lexend Deca Thin';
+  font-size: 40px;
+  color: #4E62E2;
   font-weight: 100;
+}
+
+
+/* LIGHT */
+
+.font-light-white-18{
+  font-family: 'Lexend Deca Light';
+  font-size: 18px;
+  color: white
+}
+.font-light-blue-20{
+  font-family: 'Lexend Deca Light';
+  font-size: 25px;
+  color: #4E62E2;
+}
+
+/* EXTRA LIGHT */
+
+.font-extra-light-white-12{
+  font-family: 'Lexend Deca ExtraLight';
+  font-size: 12px;
+  color: white
+}
+
+.font-extra-light-blue-12{
+  font-family: 'Lexend Deca ExtraLight';
+  font-size: 12px;
+  color: #4E62E2;
+
+}
+
+.font-extra-light-white-16{
+  font-family: 'Lexend Deca ExtraLight';
+  font-size: 16px;
+  color: white
+}
+
+.font-extra-light-white-20{
+  font-family: 'Lexend Deca ExtraLight';
+  font-size: 20px !important;
+  color: white !important;
 }

@@ -6,15 +6,15 @@
           EL MUNDO DE LOS OBJETOS
         </h1>
       </MDBCol>
-      <MDBCol md="6">
-        <p class="font-regular-white-14">
+      <MDBCol md="6" class="font-thin-white-14">
+        <p class="">
           El 80 % del impacto de un objeto se encuentra determinado dentro de su fase de diseño.  Todos los objetos que diseñamos se encuentran contenidos en un mundo invisible, donde están fabricados a partir de diferentes materiales procedentes de diferentes fuentes a lo largo y ancho del planeta. En este espacio se busca darle visualización a este mundo normalmente invisible a ojos comunes, con el fin de comprender y concientizar del impacto que tienen los objetos de uso cotidiano en medio ambiente. 
         </p>
-        <span class="font-regular-white-14"> 
+        <span> 
           En esta plataforma web se busca simular la creación de un objeto procedente desde China el cual ha sido manufacturado en dicho país y enviado a cualquier parte de Chile, para así calcular cual es el impacto medioambiental que tiene dicho producto. Esto con el fin de comprender que las pequeñas decisiones de diseño afectan en gran medida al mundo que nos rodea.
         </span>
       </MDBCol>
-      <MDBRow class="justify-content-center mt-5 ms-5 ps-">
+      <MDBRow class="justify-content-center mt-5 ms-5">
       <MDBCol md="auto">
         <MDBBtn color="light" block @click="goToCreate">Ir a crear</MDBBtn>
       </MDBCol>

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeComponent from './components/Home.vue';
 import CreateComponent from './components/Create.vue'
 import SourcesComponent from './components/Sources.vue'
+import UploadComponent from './components/Upload.vue'
 
 
 const routes = [
@@ -18,6 +19,10 @@ const routes = [
     path: '/sources',
     component: SourcesComponent
   },
+  {
+    path:'/upload-objects',
+    component: UploadComponent
+  }
 ];
 
 const router = createRouter({

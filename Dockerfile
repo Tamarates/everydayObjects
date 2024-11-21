@@ -1,5 +1,7 @@
 FROM node:lts-alpine
 
+ENV HOST=0.0.0.0
+
 RUN npm install -g http-server
 
 WORKDIR /app
@@ -10,5 +12,6 @@ RUN npm install
 
 COPY ./ /app
 
-CMD ["npm", "run", "dev"]
+EXPOSE 5173
 
+CMD ["npm", "run", "dev"]

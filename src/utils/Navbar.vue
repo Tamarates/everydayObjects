@@ -72,4 +72,8 @@ export default {
     color: #3b71ca;
   }
 
+  .container-fluid{
+    padding: 0 !important;
+  }
+
 </style>

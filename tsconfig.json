@@ -8,12 +8,6 @@
       "path": "./tsconfig.app.json"
     }
   ],
-  "types": ["node"],
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue"
-  ],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
@@ -23,10 +17,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
+    "baseUrl": "./", // Base relativa a este archivo
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"] // Alias para rutas absolutas que apuntan a `src`
     },
-    "types": ["vite/client"]
-  }
+    "types": ["vite/client"] // Tipos para Vite
+  },
+  "include": [], // Este archivo base no necesita incluir archivos directamente
+  "exclude": ["node_modules", "dist"] // Exclusión de carpetas comunes
 }

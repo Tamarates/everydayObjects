@@ -6,17 +6,17 @@
         <MDBCard class="overlay-card background-blue">
           <div v-if="!created">
             <MDBCardBody>
-              <h5 class="card-title">Crear un objeto</h5>
+              <h5 class="card-title font-light-white-18">Crear un objeto</h5>
               <MDBRow>
                 <MDBCol col="3">
-                  <label>Elige un objeto</label>
+                  <label class="font-extra-light-white-16">Elige un objeto</label>
                 </MDBCol>
                 <MDBCol col="4">
                   <div class="custom-select-container">
-                    <select class="custom-select" v-model="selectedOption" @change="updateMaterialLists">
-                      <option value="" disabled selected>Seleccionar</option>
-                      <option v-for="(option, index) in options" :key="index" :value="option.value">
-                        {{ option.label }}
+                    <select id="body_material" class="custom-select" v-model="selectedMaterials[index]"
+                      @change="updateMaterialLists(selectedMaterials[index], $event)">
+                      <option v-for="option in options" :key="option.id" :value="option.id">
+                        {{ option.item }}
                       </option>
                     </select>
                   </div>
@@ -29,34 +29,28 @@
                 </MDBCol>
                 <MDBCol col="6">
                   <div class="material-container">
-                    <h5 class="material-title mb-4">Materiales</h5>
-
-                    <!-- Mostrar materiales solo si hay materialKey disponible -->
-                    <MDBRow v-for="(label, index) in materialKey" :key="index" class="mb-3 align-items-center">
-                      <MDBCol col="4" class="text-right mb-3">
+                    <h5 class="material-title mb-4 font-light-white-18">Materiales</h5>
+                    <MDBRow v-for="(key, index) in materialKey" :key="index" class="mb-3 align-items-center ">
+                      <MDBCol col="4" class="text-right mb-3 font-extra-light-white-15">
                         <label>
-                          {{ label }}
+                          {{ key.label }}
                         </label>
                       </MDBCol>
                       <MDBCol col="7" class="mb-3">
-                        <!-- Selección de materiales basada en materialLists, solo si selectedOption es válido -->
-                        <select :id="'material' + index" class="custom-select" v-model="selectedMaterials[index]">
-                          <option v-if="selectedOption && materialLists[selectedOption]" 
-                                  v-for="(material, idx) in materialLists[selectedOption][index]" 
-                                  :key="idx" 
-                                  :value="material.value">
+                        <select :id="'material' + index" class="custom-select" v-model="selectedMaterials[index]"
+                          @change="updateMaterialLists(index)">
+                          <option v-if="materialLists[key.id] && materialLists[key.id][index]"
+                            v-for="(material, idx) in materialLists[key.id][index]" :key="idx" :value="material.value">
                             {{ material.label }}
                           </option>
-                          <!-- Mostrar un mensaje si no hay materiales disponibles -->
                           <option v-else disabled>No hay materiales disponibles</option>
                         </select>
                       </MDBCol>
                     </MDBRow>
-
                     <!-- Select numérico para la cantidad de objetos a crear -->
                     <MDBRow class="mb-3 align-items-center">
                       <MDBCol class="text-right mb-3 col-8">
-                        <label for="cantidad" class="font-thin-white-14">Cantidad de objetos a crear</label>
+                        <label for="cantidad" class="font-extra-light-white-12">Cantidad de objetos a crear</label>
                       </MDBCol>
                       <MDBCol class="mb-3 col-3">
                         <select id="cantidad" class="custom-select" v-model="cantidad">
@@ -70,8 +64,8 @@
               </MDBRow>
 
               <MDBRow class="mt-3">
-                <MDBCol col="5" class="text-end">
-                  <label class="font-regular-white-14">Elige un lugar de destino</label>
+                <MDBCol col="5" class="text-start">
+                  <label class="font-extra-light-white-15">Elige un lugar de destino</label>
                 </MDBCol>
                 <MDBCol col="6">
                   <div class="custom-select-container">
@@ -87,7 +81,7 @@
             </MDBCardBody>
             <MDBCardFooter class="mb-4 d-flex justify-content-center">
               <MDBCol col="4">
-                <MDBBtn color="light" block @click="goToCreate">Ir a crear</MDBBtn>
+                <MDBBtn color="light" block @click="goToCreate" class="font-regular-blue-20">Ir a crear</MDBBtn>
               </MDBCol>
             </MDBCardFooter>
           </div>
@@ -111,28 +105,28 @@
                   <div>
                     <h5 class="material-title text-start">Producción</h5>
                     <!-- <MDBRow v-for="(label, index) in production" :key="index" class="mb-3"> -->
-                      <MDBRow>
-                        <MDBCol col="12" class="d-flex justify-content-start mb-3">
-                          <!-- <label :for="'production' + index" class="font-thin-white-14">{{ label }}</label> -->
-                          <label class="font-thin-white-14" for="">Huella de Carbono 6.789 Kg</label>
-                        </MDBCol>
-                        <MDBCol col="12">
-                          <label class="font-thin-white-14 mb-3" for="">Huella Hídrica 111.254 Lt</label>
-                        </MDBCol>
-                        <MDBCol  col="12">
-                          <label class="font-thin-white-14 mb-3">Diesel 1.046 Lt</label>
-                        </MDBCol>
-                      </MDBRow>
-                    </div>
+                    <MDBRow>
+                      <MDBCol col="12" class="d-flex justify-content-start mb-3">
+                        <!-- <label :for="'production' + index" class="font-thin-white-14">{{ label }}</label> -->
+                        <label class="font-thin-white-14" for="">Huella de Carbono 6.789 Kg</label>
+                      </MDBCol>
+                      <MDBCol col="12">
+                        <label class="font-thin-white-14 mb-3" for="">Huella Hídrica 111.254 Lt</label>
+                      </MDBCol>
+                      <MDBCol col="12">
+                        <label class="font-thin-white-14 mb-3">Diesel 1.046 Lt</label>
+                      </MDBCol>
+                    </MDBRow>
+                  </div>
                   <div>
                     <h5 class="material-title text-start">Envios</h5>
                     <!-- <MDBRow v-for="(label, index) in envios" :key="index" class="mb-3"> -->
-                      <MDBRow >  
-                        <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
+                    <MDBRow>
+                      <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
                         <!-- <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label> -->
-                         Co2 0.075 Kg
+                        Co2 0.075 Kg
                       </MDBCol>
-                      <MDBCol  col="12">
+                      <MDBCol col="12">
                         <label class="font-thin-white-14 mb-3">Diesel 0.028 Lt</label>
                       </MDBCol>
                     </MDBRow>
@@ -143,12 +137,12 @@
                     <MDBRow>
                       <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
                         <!-- <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label> -->
-                         Co2 6.864 Kg
+                        Co2 6.864 Kg
                       </MDBCol>
-                      <MDBCol  col="12">
+                      <MDBCol col="12">
                         <label class="font-thin-white-14 mb-3">Diesel 1.074 Lt</label>
                       </MDBCol>
-                      <MDBCol  col="12">
+                      <MDBCol col="12">
                         <label class="font-thin-white-14 mb-3">Huella Hídrica 111.254 Lt</label>
                       </MDBCol>
                     </MDBRow>
@@ -164,61 +158,99 @@
 </template>
 
 <script>
+import ObjectService from '@/services/services.service';
+
 export default {
   name: 'CreateComponent',
   data() {
     return {
-      options: [
-        { value: 'lapiz', label: 'Lápiz' },
-        { value: 'bicicleta', label: 'Bicicleta' },
-        { value: 'audifono', label: 'Audífono' },
-      ],
+      options: [],
       selectedOption: null,
       selectedMaterials: [],
-      materialKey: ['Cuerpo', 'Detalles 1', 'Detalles 2', 'Detalles 3'],
-      materialLists: {
-        lapiz: [
-          [{ label: 'Pvc', value: 'pvc' }, { label: 'Acero inoxidable', value: 'AI' }, { label: 'Polipropileno', value: 'poli' }, { label: 'Aluminio', value: 'AI' }, { label: 'Madera', value: 'AI' }],
-          [{ label: 'Tinta', value: 'tinta' }, { label: 'Grafito', value: 'grafito' },  { label: 'Arcilla', value: 'arcilla' }],
-          [{ label: 'Caucho', value: 'caucho' }, { label: 'Silicona', value: 'silicona' }],
-          ,
-
-        ],
-        bicicleta: [
-          [{ label: 'Acero', value: 'acero' }, { label: 'Aluminio', value: 'aluminio' }, { label: 'Fibra de carbono', value: 'FC' }, { label: 'Titanio', value: 'Titanio' }],
-          [{ label: 'Nylon', value: 'nylon' }, { label: 'Aluminio', value: 'aluminio' }, { label: 'Acero', value: 'acero' }],
-          [{ label: 'Caucho', value: 'caucho' }, { label: 'Gomas', value: 'gomas' }],
-          [],
-        ],
-        audifono: [
-          [{ label: 'Aluminio', value: 'aluminio' }, { label: 'Cobre', value: 'cobre' },{ label: 'ABS', value: 'abs' }],
-          [{ label: 'Espuma', value: 'espuma' }, { label: 'Cuero sintético', value: 'cs' }, { label: 'Goma (Latex) ', value: 'goma' }],
-            ],
-      },
+      materialKey: [
+        { id: "body_materials", label: "Cuerpo" },
+        { id: "detail_materials", label: "Detalles 1" },
+        { id: "detail_materials", label: "Detalles 2" },
+        { id: "detail_materials", label: "Detalles 3" },
+      ],
+      materialLists: {}, // Inicializado como objeto reactivo
       citySelected: '',
       citiesList: [
-      { value: 'santiago', label: 'Santiago' },
-      { value: 'valparaiso', label: 'Valparaíso' },
-      { value: 'concepcion', label: 'Concepción' },
-      { value: 'la_serena', label: 'La Serena' },
-      { value: 'antofagasta', label: 'Antofagasta' },
-      { value: 'temuco', label: 'Temuco' },
-      { value: 'iquique', label: 'Iquique' },
-      { value: 'puerto_montt', label: 'Puerto Montt' },
-      { value: 'rancagua', label: 'Rancagua' },
-      { value: 'arica', label: 'Arica' },
-      { value: 'talca', label: 'Talca' },
-      { value: 'punta_arenas', label: 'Punta Arenas' }
-    ],
+        { value: 'santiago', label: 'Santiago' },
+        { value: 'valparaiso', label: 'Valparaíso' },
+        { value: 'concepcion', label: 'Concepción' },
+        { value: 'la_serena', label: 'La Serena' },
+        { value: 'antofagasta', label: 'Antofagasta' },
+        { value: 'temuco', label: 'Temuco' },
+        { value: 'iquique', label: 'Iquique' },
+        { value: 'puerto_montt', label: 'Puerto Montt' },
+        { value: 'rancagua', label: 'Rancagua' },
+        { value: 'arica', label: 'Arica' },
+        { value: 'talca', label: 'Talca' },
+        { value: 'punta_arenas', label: 'Punta Arenas' },
+      ],
       created: false,
     };
   },
+  mounted() {
+    this.getObjects();
+  },
   methods: {
-    updateMaterialLists() {
-      // Actualiza las opciones de materiales solo si una opción es seleccionada
-      if (this.selectedOption) {
-        this.selectedMaterials = new Array(this.materialKey.length).fill(null);
+    async getObjects() {
+      const objects = await ObjectService.getObjects();
+      this.options = objects.map(o => ({
+        id: o.id,
+        item: o.item,
+      }));
+    },
+    async getMaterials(index) {
+      const selectedMaterialId = this.selectedMaterials[index];
+      if (selectedMaterialId) {
+      
+        this.materialLists = {}; 
+        this.getMaterials(selectedMaterialId);  
       }
+    },
+    getMaterialType(index) {
+      if (this.materialKey[index]) {
+        return this.materialKey[index].id;  
+      }
+  },
+    async getMaterials(index) {
+
+      const materials = await ObjectService.getMaterials(index);
+
+      this.materialLists = {};
+
+      this.materialKey.forEach((key, index) => {
+        if (!this.materialLists[key.id]) {
+          this.materialLists[key.id] = [];
+        }
+
+        if (key.id === "body_materials" && Array.isArray(materials.body_materials)) {
+          this.materialLists[key.id][index] = materials.body_materials.map(material => ({
+            label: material,
+            value: material,
+          }));
+        } else if (key.id === "detail_materials" && Array.isArray(materials.detail_materials)) {
+          this.materialLists[key.id][index] = materials.detail_materials.map(material => ({
+            label: material,
+            value: material,
+          }));
+        }
+      });
+    },
+    updateMaterialLists(index, event) {
+      if(event === undefined){
+        return
+      }
+
+      let id = event.target.id
+
+      if(id !== 'detail_materials'){
+        this.materialLists = {};
+        this.getMaterials(index);
+      }   
     },
     goToCreate() {
       this.created = true;
@@ -236,7 +268,7 @@ export default {
 }
 
 .map {
-  background-image: url('/src/utils/assets/images/maps.png');
+  background-image: url('../utils/assets/images/maps.png');
   background-size: cover;
   width: 100%;
   height: 666px;
@@ -308,7 +340,10 @@ option:disabled {
 .btn:hover,
 .btn {
   box-shadow: none;
-  text-transform: inherit;
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-bottom: 10px;
+  padding-right: 5px;
+  text-transform: uppercase;  
 }
 </style>
-

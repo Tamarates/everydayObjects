@@ -41,5 +41,6 @@ html, body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; /* Asegura que el fondo llene el viewport y crezca según el contenido */
+  padding: 0
 }
 </style>

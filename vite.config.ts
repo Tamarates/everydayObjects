@@ -9,6 +9,9 @@ export default defineConfig({
     devSourcemap: true,
   },
   server: {
+    watch: {
+      usePolling:true
+    },
     host: true,
   },
   plugins: [
