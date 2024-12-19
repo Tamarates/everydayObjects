@@ -7,5 +7,22 @@
     {
       "path": "./tsconfig.app.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./", // Base relativa a este archivo
+    "paths": {
+      "@/*": ["src/*"] // Alias para rutas absolutas que apuntan a `src`
+    },
+    "types": ["vite/client"] // Tipos para Vite
+  },
+  "include": [], // Este archivo base no necesita incluir archivos directamente
+  "exclude": ["node_modules", "dist"] // Exclusión de carpetas comunes
 }
