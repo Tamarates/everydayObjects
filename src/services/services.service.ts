@@ -15,6 +15,7 @@ const ObjectService = {
   async getMaterials(index: any){
     const response = await axios.get('/object/'+index);
     if(response.status === 200){
+      //  GUARDAR ID PARA MANDARLOS DEVUELTA
       return response.data
     }
   }

@@ -35,7 +35,6 @@ html, body {
   min-height: 100vh; /* El contenedor principal ocupa al menos el 100% del viewport */
 }
 
-/* Fondo ocupa el espacio disponible y crece con el contenido */
 .background {
   background-image: url('/src/utils/assets/images/background.svg'); /* Ajusta la ruta si es necesario */
   background-size: cover;

@@ -2,7 +2,71 @@
   <MDBContainer fluid>
     <MDBRow>
       <div class="map-container">
-        <div class="map"></div>
+        <div class="map" v-html="iframeContent" v-if="!created"></div>
+        <div class="map pt-5" v-if="created">
+          <MDBCard>
+            <MDBCardBody>
+              <MDBCardTitle class="font-light-blue-20 pb-4">Huella Ambiental Personal</MDBCardTitle>
+              <MDBCardText>
+                <p class="font-extra-light-blue-14">Este es José, un chileno promedio que, como todos, realiza acciones diariamente desde que se despierta hasta que se va a dormir. Cada una de estas acciones genera un impacto ambiental. Sus decisiones reflejan las de muchas otras personas en situaciones similares.</p>
+                <p class="font-extra-light-blue-14">Para entender mejor el impacto ambiental de las decisiones relacionadas con el uso de materiales en la manufactura, compararemos el impacto ambiental que José genera diariamente con el impacto del objeto que tú has creado.</p>
+                <MDBRow class="pt-4 justify-content-evenly align-items-center">
+                  <MDBCol col="6">
+                    <MDBRow>
+                      <MDBCol col="11" class="pb-3">
+                        <div class="data-position">
+                          <div>
+                            <span class="font-regular-blue-38">47.3%</span>
+                          </div>
+                          <div>
+                            <img class="logo" src="/src/assets/co2.png" alt="CO2">
+                          </div>
+                        </div>
+                      </MDBCol>
+                      <MDBCol col="11" class="py-3">
+                        <div class="data-position">
+                          <div>
+                            <span class="font-regular-blue-38">65.4%</span>
+                          </div>
+                          <div class="pe-4">
+                            <img class="logo" src="/src/assets/agua.png" alt="CO2">
+                          </div>
+                        </div>
+                      </MDBCol>
+                      <MDBCol col="11" class="py-3">
+                        <div class="data-position">
+                          <div>
+                            <span class="font-regular-blue-38">153.4%</span>
+                          </div>
+                          <div class="pe-4">
+                            <img class="logo" src="/src/assets/barrillogo.png" alt="CO2">
+                          </div>
+                        </div>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCol>
+                  <MDBCol col="5">
+                    <div class="d-flex align-items-start">
+                      <!-- Imagen de la persona alineada a la izquierda -->
+                      <img class="person" src="/src/assets/person.png" alt="Person">
+
+                      <!-- Contenedor para las imágenes alineadas a la derecha -->
+                      <div class="d-flex flex-column align-items-start ms-3 mt-5 pt-5">
+                        <img class="logo-cloud" src="/src/assets/co2.png" alt="CO2">
+                        <span class="font-light-blue-15">14.5 kg</span>
+                        <img class="logo-person ms-2 mt-3" src="/src/assets/agua.png" alt="Agua">
+                        <span class="font-light-blue-15">170 Lt</span>
+                        <img class="logo-person ms-2 mt-3" src="/src/assets/barrillogo.png" alt="Barril">
+                        <span class="font-light-blue-15">0.7 Lt</span>
+                      </div>
+                    </div>
+                  </MDBCol>
+
+                </MDBRow>
+              </MDBCardText>
+            </MDBCardBody>
+          </MDBCard>
+        </div>
         <MDBCard class="overlay-card background-blue">
           <div v-if="!created">
             <MDBCardBody>
@@ -58,11 +122,9 @@
                         </select>
                       </MDBCol>
                     </MDBRow>
-
                   </div>
                 </MDBCol>
               </MDBRow>
-
               <MDBRow class="mt-3">
                 <MDBCol col="5" class="text-start">
                   <label class="font-extra-light-white-15">Elige un lugar de destino</label>
@@ -155,15 +217,43 @@
       </div>
     </MDBRow>
   </MDBContainer>
+
+  <ModalComponent ref="modalRef" />
 </template>
 
 <script>
 import ObjectService from '@/services/services.service';
+import ModalComponent from '@/utils/ModalComponent.vue'
+import {ref} from 'vue'
+
+const modalRef = ref();
 
 export default {
   name: 'CreateComponent',
+  components: 'ModalComponent',
+
   data() {
     return {
+      iframeContent: `
+        <iframe src='https://flo.uri.sh/visualisation/20790974/embed' 
+          title='Interactive or visual content' 
+          class='flourish-embed-iframe' 
+          frameborder='0' 
+          scrolling='no' 
+          style='width:100%;height:666px;' 
+          sandbox='allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation'>
+        </iframe>
+        <div style='width:100%!;margin-top:4px!important;text-align:right!important;'>
+          <a class='flourish-credit' 
+            href='https://public.flourish.studio/visualisation/20790974/?utm_source=embed&utm_campaign=visualisation/20790974' 
+            target='_top' 
+            style='text-decoration:none!important'>
+            <img alt='Made with Flourish' 
+              src='https://public.flourish.studio/resources/made_with_flourish.svg' 
+              style='width:105px!important;height:16px!important;border:none!important;margin:0!important;'>
+          </a>
+        </div>
+      `,
       options: [],
       selectedOption: null,
       selectedMaterials: [],
@@ -194,6 +284,7 @@ export default {
   },
   mounted() {
     this.getObjects();
+    // modalRef.value.openModal()
   },
   methods: {
     async getObjects() {
@@ -215,7 +306,7 @@ export default {
       if (this.materialKey[index]) {
         return this.materialKey[index].id;  
       }
-  },
+    },
     async getMaterials(index) {
 
       const materials = await ObjectService.getMaterials(index);
@@ -265,14 +356,15 @@ export default {
 <style scoped>
 .map-container {
   position: relative;
+  padding: 0;
 }
 
 .map {
-  background-image: url('../utils/assets/images/maps.png');
   background-size: cover;
-  width: 100%;
+  width: 55%;
   height: 666px;
-  margin-top: 40px;
+  margin-top: 22px;
+  margin-left: 24px;
 }
 
 .overlay-card {
@@ -345,5 +437,35 @@ option:disabled {
   padding-bottom: 10px;
   padding-right: 5px;
   text-transform: uppercase;  
+}
+
+
+.person{
+  max-width: 43%;
+}
+.data-position {
+  display: flex; /* Usa Flexbox para alinear elementos */
+  align-items: center; /* Alinea verticalmente en el centro */
+  justify-content: space-between; /* Separa los elementos hacia los extremos */
+}
+
+.data-position span {
+  margin-left: 0; /* Asegúrate de que el texto esté alineado a la izquierda */
+}
+
+.data-position img {
+  margin-right: 0; /* Asegúrate de que la imagen esté alineada a la derecha */
+}
+
+.logo{
+  width: 70%
+}
+
+.logo-person{
+  width: 30%;
+}
+
+.logo-cloud{
+  width: 40%;
 }
 </style>
