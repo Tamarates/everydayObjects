@@ -413,11 +413,11 @@ export default {
 
 .overlay-card {
   position: absolute;
-  top: 53%;
+  top: 50%;
   right: 20px;
   transform: translateY(-50%);
   width: 40%;
-  height: 88%;
+  height: 90%;
 }
 
 .background-blue {
