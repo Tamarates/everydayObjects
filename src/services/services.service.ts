@@ -18,6 +18,15 @@ const ObjectService = {
       //  GUARDAR ID PARA MANDARLOS DEVUELTA
       return response.data
     }
+  },
+
+  async getImpact(list :any){
+    const response = await axios.post('/impact', {
+      material_ids: list
+    })
+    if(response.status === 200){
+      return response.data
+    }
   }
 }
 

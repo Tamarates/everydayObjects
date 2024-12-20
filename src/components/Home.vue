@@ -6,8 +6,8 @@
           EL MUNDO DE LOS OBJETOS
         </h1>
       </MDBCol>
-      <MDBCol md="6" class="font-thin-white-14">
-        <p class="">
+      <MDBCol md="6" class="font-regular-white-14">
+        <p>
           El 80 % del impacto de un objeto se encuentra determinado dentro de su fase de diseño.  Todos los objetos que diseñamos se encuentran contenidos en un mundo invisible, donde están fabricados a partir de diferentes materiales procedentes de diferentes fuentes a lo largo y ancho del planeta. En este espacio se busca darle visualización a este mundo normalmente invisible a ojos comunes, con el fin de comprender y concientizar del impacto que tienen los objetos de uso cotidiano en medio ambiente. 
         </p>
         <span> 

@@ -1,7 +1,7 @@
 <template>
   <MDBContainer fluid>
     <MDBRow class="justify-content-center mt-5 ms-2 pt-4">
-      <MDBCol col="4" class="text-start font-extra-light-white-20">
+      <MDBCol col="4" class="text-start font-regular-white-14">
         <p>Explora el impacto ambiental del diseño de diferentes objetos.</p>
         <p>Completa la tabla con los datos requeridos y utiliza los enlaces de fuentes para acceder a información útil.
           Recuerda registrar las cantidades en las unidades de medida: Km, Kg y Lt.</p>
@@ -26,9 +26,9 @@
             Materiales Internos
           </MDBCardHeader>
           <MDBCardBody>
-            <p class="font-extra-light-blue-12 p-0 m-0">De no contener materiales internos aprieta continuar sin llenar
+            <p class="font-extra-light-blue-14 p-0 m-0">De no contener materiales internos aprieta continuar sin llenar
               los campos.</p>
-            <p class="font-extra-light-blue-12 pt-0 mt-0">Puedes agregar hasta <b>5 materiales</b>. </p>
+            <p class="font-extra-light-blue-14 pt-0 mt-0">Puedes agregar hasta <b>5 materiales</b>. </p>
 
             <MDBRow>
               <MDBCol col="6">

@@ -91,18 +91,20 @@ a,
   text-align: start;
 }
 
-.font-regular-white-38{
-  font-family: 'Lexend Deca';
-  font-size: 38px;
-  color: white;
-}
-
 .font-regular-white-20{
   font-family: 'Lexend Deca';
   font-size: 20px;
   color: white;
   font-style: normal;
 }
+
+.font-regular-white-38{
+  font-family: 'Lexend Deca';
+  font-size: 38px;
+  color: white;
+}
+
+
 
 .font-regular-blue-20{
   font-family: 'Lexend Deca' !important;

@@ -16,7 +16,7 @@
                       <MDBCol col="11" class="pb-3">
                         <div class="data-position">
                           <div>
-                            <span class="font-regular-blue-38">47.3%</span>
+                            <span class="font-regular-blue-38">{{ percentCo2 }} %</span>
                           </div>
                           <div>
                             <img class="logo" src="/src/assets/co2.png" alt="CO2">
@@ -26,7 +26,7 @@
                       <MDBCol col="11" class="py-3">
                         <div class="data-position">
                           <div>
-                            <span class="font-regular-blue-38">65.4%</span>
+                            <span class="font-regular-blue-38">{{ percentWater }} %</span>
                           </div>
                           <div class="pe-4">
                             <img class="logo" src="/src/assets/agua.png" alt="CO2">
@@ -36,7 +36,7 @@
                       <MDBCol col="11" class="py-3">
                         <div class="data-position">
                           <div>
-                            <span class="font-regular-blue-38">153.4%</span>
+                            <span class="font-regular-blue-38">{{ percentDiesel }}%</span>
                           </div>
                           <div class="pe-4">
                             <img class="logo" src="/src/assets/barrillogo.png" alt="CO2">
@@ -88,8 +88,8 @@
               </MDBRow>
 
               <MDBRow class="mt-5 pt-4">
-                <MDBCol col="6" class="d-flex justify-content-center align-items-center">
-                  <img class="pencil" src="/src/utils/assets/images/lapiz.png" />
+                <MDBCol col="6" class="d-flex justify-content-center align-items-center" v-if="haveImage">
+                  <img class="pencil" :src="images"/>
                 </MDBCol>
                 <MDBCol col="6">
                   <div class="material-container">
@@ -160,52 +160,55 @@
                 <span class="font-thin-white-14 text-center">por kg de producto</span>
               </div>
               <MDBRow class="mt-4">
-                <MDBCol col="6" class="d-flex justify-content-center align-items-center">
-                  <img class="pencil" src="/src/utils/assets/images/lapiz.png" alt="Imagen de lápiz" />
+                <MDBCol col="6" class="d-flex justify-content-center align-items-center" v-if="haveImage">
+                  <img class="pencil" :src="images" />
                 </MDBCol>
                 <MDBCol col="6">
                   <div>
                     <h5 class="material-title text-start">Producción</h5>
-                    <!-- <MDBRow v-for="(label, index) in production" :key="index" class="mb-3"> -->
-                    <MDBRow>
-                      <MDBCol col="12" class="d-flex justify-content-start mb-3">
-                        <!-- <label :for="'production' + index" class="font-thin-white-14">{{ label }}</label> -->
-                        <label class="font-thin-white-14" for="">Huella de Carbono 6.789 Kg</label>
+                    <MDBRow class="font-thin-white-14 ">
+                      <MDBCol class="d-flex justify-content-between mb-3" col="12" >
+                        <span class="me-4">Huella de Carbono</span>
+                        <span class="me-3">{{ total_carbon_footprint }} Kg</span>
                       </MDBCol>
-                      <MDBCol col="12">
-                        <label class="font-thin-white-14 mb-3" for="">Huella Hídrica 111.254 Lt</label>
+                      <MDBCol class="d-flex justify-content-between mb-3" col="12">
+                        <span class="me-4">Huella Hídrica</span>
+                        <span class="me-3">{{ total_hydric_footprint }} Lt</span>
                       </MDBCol>
-                      <MDBCol col="12">
-                        <label class="font-thin-white-14 mb-3">Diesel 1.046 Lt</label>
+                      <MDBCol class="d-flex justify-content-between mb-3" col="12">
+                        <span class="me-4">Diesel</span>
+                        <span class="me-3">{{ total_diesel_consumption }} Lt</span>
                       </MDBCol>
                     </MDBRow>
                   </div>
                   <div>
                     <h5 class="material-title text-start">Envios</h5>
-                    <!-- <MDBRow v-for="(label, index) in envios" :key="index" class="mb-3"> -->
                     <MDBRow>
-                      <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
-                        <!-- <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label> -->
-                        Co2 0.075 Kg
+                      <MDBCol class="d-flex justify-content-between font-thin-white-14 mb-3" col="12">
+                        <span class="me-4">Co2</span>
+                        <span class="me-3">{{ total_co2 }} Kg</span>
                       </MDBCol>
-                      <MDBCol col="12">
-                        <label class="font-thin-white-14 mb-3">Diesel 0.028 Lt</label>
+                      <MDBCol class="d-flex justify-content-between font-thin-white-14 mb-3" col="12">
+                        <span class="me-4">Diesel</span>
+                        <span class="me-3">{{ total_diesel }} Lt</span>
                       </MDBCol>
                     </MDBRow>
                   </div>
                   <div>
                     <h5 class="material-title text-start">Total</h5>
-                    <!-- <MDBRow v-for="(label, index) in total" :key="index" class="mb-3"> -->
                     <MDBRow>
-                      <MDBCol class="d-flex justify-content-start font-thin-white-14 mb-3">
-                        <!-- <label :for="'total' + index" class="font-thin-white-14">{{ label }}</label> -->
-                        Co2 6.864 Kg
+                      <MDBCol class="d-flex justify-content-between font-thin-white-14 mb-3" col="12">
+                        <span class="me-4">Co2</span>
+                        <span class="me-3">{{ Number(total_co2) + Number(total_carbon_footprint) }} Kg</span> <!-- Espacio a la derecha del número -->
                       </MDBCol>
-                      <MDBCol col="12">
-                        <label class="font-thin-white-14 mb-3">Diesel 1.074 Lt</label>
+
+                      <MDBCol class="d-flex justify-content-between font-thin-white-14 mb-3" col="12">
+                        <span class="me-4">Diesel</span>
+                        <span class="me-3">{{ (Number(total_diesel) + Number(total_diesel_consumption)).toFixed(2) }} Lt</span>
                       </MDBCol>
-                      <MDBCol col="12">
-                        <label class="font-thin-white-14 mb-3">Huella Hídrica 111.254 Lt</label>
+                      <MDBCol class="d-flex justify-content-between font-thin-white-14 mb-3" col="12">
+                        <span class="me-4">Huella Hídrica</span>
+                        <span class="me-3"> {{ total_hydric_footprint }} Lt</span>
                       </MDBCol>
                     </MDBRow>
                   </div>
@@ -254,6 +257,7 @@ export default {
           </a>
         </div>
       `,
+      materials: {},
       options: [],
       selectedOption: null,
       selectedMaterials: [],
@@ -262,6 +266,7 @@ export default {
         { id: "detail_materials", label: "Detalles 1" },
         { id: "detail_materials", label: "Detalles 2" },
         { id: "detail_materials", label: "Detalles 3" },
+        { id: "material_ids", values: {}}
       ],
       materialLists: {}, // Inicializado como objeto reactivo
       citySelected: '',
@@ -280,6 +285,16 @@ export default {
         { value: 'punta_arenas', label: 'Punta Arenas' },
       ],
       created: false,
+      images: '',
+      haveImage: false,
+      percentCo2: '',
+      percentWater: '',
+      percentDiesel: '',
+      total_carbon_footprint: '',
+      total_co2: '',
+      total_diesel: '',
+      total_diesel_consumption: '',
+      total_hydric_footprint: ''
     };
   },
   mounted() {
@@ -292,15 +307,8 @@ export default {
       this.options = objects.map(o => ({
         id: o.id,
         item: o.item,
+        image: o.image
       }));
-    },
-    async getMaterials(index) {
-      const selectedMaterialId = this.selectedMaterials[index];
-      if (selectedMaterialId) {
-      
-        this.materialLists = {}; 
-        this.getMaterials(selectedMaterialId);  
-      }
     },
     getMaterialType(index) {
       if (this.materialKey[index]) {
@@ -309,7 +317,7 @@ export default {
     },
     async getMaterials(index) {
 
-      const materials = await ObjectService.getMaterials(index);
+      this.materials = await ObjectService.getMaterials(index);
 
       this.materialLists = {};
 
@@ -318,13 +326,13 @@ export default {
           this.materialLists[key.id] = [];
         }
 
-        if (key.id === "body_materials" && Array.isArray(materials.body_materials)) {
-          this.materialLists[key.id][index] = materials.body_materials.map(material => ({
+        if (key.id === "body_materials" && Array.isArray(this.materials.body_materials)) {
+          this.materialLists[key.id][index] = this.materials.body_materials.map(material => ({
             label: material,
             value: material,
           }));
-        } else if (key.id === "detail_materials" && Array.isArray(materials.detail_materials)) {
-          this.materialLists[key.id][index] = materials.detail_materials.map(material => ({
+        } else if (key.id === "detail_materials" && Array.isArray(this.materials.detail_materials)) {
+          this.materialLists[key.id][index] = this.materials.detail_materials.map(material => ({
             label: material,
             value: material,
           }));
@@ -332,19 +340,55 @@ export default {
       });
     },
     updateMaterialLists(index, event) {
-      if(event === undefined){
-        return
+      if (event === undefined) {
+        return;
       }
 
-      let id = event.target.id
+      const id = event.target.id;
 
-      if(id !== 'detail_materials'){
+      if (id !== 'detail_materials') {
         this.materialLists = {};
         this.getMaterials(index);
-      }   
+      }
+
+      const selectedOption = this.options.find((object) => object.id === index);
+
+      if (selectedOption) {
+        this.images = selectedOption.image;
+        this.haveImage = true;
+      } else {
+        this.images = '';
+        this.haveImage = false;
+      }      
+    },
+    async getPercents(list) {
+      let percents = await ObjectService.getImpact(list);
+      console.log(percents);
+
+      this.total_co2 = Number(percents.total_co2).toFixed(2)
+      this.total_carbon_footprint = Number(percents.total_carbon_footprint).toFixed(2)
+      this.total_diesel = Number(percents.total_diesel).toFixed(2)
+      this.total_diesel_consumption = Number(percents.total_diesel_consumption).toFixed(2)
+      this.total_hydric_footprint =  Number(percents.total_hydric_footprint).toFixed(2)
+
+      this.percentCo2 = ((Number(this.total_carbon_footprint) + Number(this.total_co2)) / 14.5 * 100).toFixed(2)
+      this.percentWater =  ((this.total_hydric_footprint / 170) * 100).toFixed(2)
+      this.percentDiesel = Math.round((Number(this.total_diesel_consumption) + Number(this.total_diesel)) / 0.7 * 100)
+      
     },
     goToCreate() {
+      const materialIds = []
       this.created = true;
+
+      this.materialKey.forEach((key, index) => {
+        if (key.id === "material_ids" && Array.isArray(this.materials.material_ids)) {
+          this.materialLists[key.id][index] = this.materials.material_ids.forEach(x => {
+            materialIds.push(x)
+          })
+          
+          this.getPercents(materialIds)
+        }
+      });
     },
     goToBack() {
       this.created = false;
