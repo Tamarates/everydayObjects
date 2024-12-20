@@ -20,65 +20,148 @@
         </ul>
         </p>
       </MDBCol>
+      
       <MDBCol col="8">
         <MDBCard bg="white">
-          <MDBCardHeader class="text-center font-light-blue-20">
-            Materiales Internos
+          <MDBCardHeader class="text-center font-light-blue-25 mt-4"  v-if="stage === 0">
+            Objeto
+          </MDBCardHeader>
+          <MDBCardHeader class="text-center font-light-blue-25"  v-if="stage === 1">
+            Materiales Cuerpo
+          </MDBCardHeader>
+          <MDBCardHeader class="text-center font-light-blue-25"  v-if="stage === 2">
+            Materiales Adicionales
           </MDBCardHeader>
           <MDBCardBody>
-            <p class="font-extra-light-blue-14 p-0 m-0">De no contener materiales internos aprieta continuar sin llenar
-              los campos.</p>
-            <p class="font-extra-light-blue-14 pt-0 mt-0">Puedes agregar hasta <b>5 materiales</b>. </p>
+            <div v-if="stage === 0">
+              <p class="font-extra-light-blue-14 p-0 my-2">Selecciona un objeto que tu consideres de uso cotidiano y no se encuentre en la lista, indica el nombre de este y  por ultimo agregale una descripción.</p>
+            </div>
+            <div v-if="stage === 1">
+              <p class="font-extra-light-blue-14 p-0 m-0">De no contener materiales internos aprieta continuar sin llenar los campos.</p>
+              <p class="font-extra-light-blue-14 pt-0 mt-0">Puedes agregar hasta <b>5 materiales</b>. </p>
+            </div>
+            <div v-if="stage === 2">
+              <p class="font-extra-light-blue-14 pt-0 mt-0">Puedes agregar hasta <b>5 materiales</b>. </p>
+            </div>
 
-            <MDBRow>
-              <MDBCol col="6">
-                <span class="font-medium-blue-20">Procedencia</span>
-              </MDBCol>
-              <MDBCol col="6">
-                <span class="font-medium-blue-20">Impacto Ambiental</span>
-              </MDBCol>
-            </MDBRow>
 
-            <!-- Bucle para renderizar dinámicamente las filas -->
-            <MDBRow v-for="(material, index) in materials" :key="index" class="mt-3">
-              <!-- Inputs de Procedencia -->
-              <MDBCol col="6">
-                <MDBRow>
-                  <MDBCol col="6">
-                    <MDBInput label="Nombre" v-model="material.name" />
+            <div v-if="stage === 0">
+              <MDBRow>
+                <MDBCol>
+                  <span class="font-medium-blue-20">Objeto</span>
+                  <MDBCol col="4" class="my-4">
+                    <MDBInput label="Nombre del objeto" />
                   </MDBCol>
-                  <MDBCol col="6">
-                    <MDBInput label="País de Procedencia" v-model="material.countryOrigin" />
+                  <span class="font-medium-blue-20">Descripción</span>
+                  <MDBCol col="4" class="my-4">
+                    <MDBTextarea label="¿Que es este objeto?" rows="4" v-model="textareaValue" />
                   </MDBCol>
-                </MDBRow>
-              </MDBCol>
+                </MDBCol>
+              </MDBRow>
+            </div>
 
-              <!-- Inputs de Impacto Ambiental -->
-              <MDBCol col="6">
-                <MDBRow>
-                  <MDBCol col="4">
-                    <MDBInput label="Huella de Carbono" v-model="material.fprintC" />
-                  </MDBCol>
-                  <MDBCol col="4">
-                    <MDBInput label="Huella Hídrica" v-model="material.hh" />
-                  </MDBCol>
-                  <MDBCol col="4">
-                    <MDBInput label="Diésel" v-model="material.diesel" />
-                  </MDBCol>
-                </MDBRow>
-              </MDBCol>
-            </MDBRow>
+            <div v-if="stage === 1">
+              <MDBRow>              
+                <MDBCol col="6">
+                  <span class="font-medium-blue-20">Procedencia</span>
+                </MDBCol>
+                <MDBCol col="6">
+                  <span class="font-medium-blue-20">Impacto Ambiental</span>
+                </MDBCol>
+              </MDBRow>
 
-            <!-- Botón para agregar una nueva fila -->
-            <MDBRow>
-              <MDBCol col="12" class="text-start">
-                <MDBBtn color="link" class="mt-3 no-padding" @click="addMaterial">
-                  Agregar otro material +
-                </MDBBtn>
-              </MDBCol>
-            </MDBRow>
+              <!-- Bucle para renderizar dinámicamente las filas -->
+              <MDBRow v-for="(material, index) in materials" :key="index" class="mt-3">
+                <!-- Inputs de Procedencia -->
+                <MDBCol col="6">
+                  <MDBRow>
+                    <MDBCol col="6">
+                      <MDBInput label="Nombre" v-model="material.name" />
+                    </MDBCol>
+                    <MDBCol col="6">
+                      <MDBInput label="País de Procedencia" v-model="material.countryOrigin" />
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCol>
+
+                <!-- Inputs de Impacto Ambiental -->
+                <MDBCol col="6">
+                  <MDBRow>
+                    <MDBCol col="4">
+                      <MDBInput label="Huella de Carbono" v-model="material.fprintC" />
+                    </MDBCol>
+                    <MDBCol col="4">
+                      <MDBInput label="Huella Hídrica" v-model="material.hh" />
+                    </MDBCol>
+                    <MDBCol col="4">
+                      <MDBInput label="Diésel" v-model="material.diesel" />
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCol>
+              </MDBRow>
+
+              <!-- Botón para agregar una nueva fila -->
+              <MDBRow>
+                <MDBCol col="12" class="text-start">
+                  <MDBBtn color="link" class="mt-3 no-padding" @click="addMaterial">
+                    Agregar otro material +
+                  </MDBBtn>
+                </MDBCol>
+              </MDBRow>
+            </div>
+
+            <div v-if="stage === 2">
+              <MDBRow>              
+                <MDBCol col="6">
+                  <span class="font-medium-blue-20">Procedencia</span>
+                </MDBCol>
+                <MDBCol col="6">
+                  <span class="font-medium-blue-20">Impacto Ambiental</span>
+                </MDBCol>
+              </MDBRow>
+
+              <!-- Bucle para renderizar dinámicamente las filas -->
+              <MDBRow v-for="(material, index) in materials" :key="index" class="mt-3">
+                <!-- Inputs de Procedencia -->
+                <MDBCol col="6">
+                  <MDBRow>
+                    <MDBCol col="6">
+                      <MDBInput label="Nombre" v-model="material.name" />
+                    </MDBCol>
+                    <MDBCol col="6">
+                      <MDBInput label="País de Procedencia" v-model="material.countryOrigin" />
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCol>
+
+                <!-- Inputs de Impacto Ambiental -->
+                <MDBCol col="6">
+                  <MDBRow>
+                    <MDBCol col="4">
+                      <MDBInput label="Huella de Carbono" v-model="material.fprintC" />
+                    </MDBCol>
+                    <MDBCol col="4">
+                      <MDBInput label="Huella Hídrica" v-model="material.hh" />
+                    </MDBCol>
+                    <MDBCol col="4">
+                      <MDBInput label="Diésel" v-model="material.diesel" />
+                    </MDBCol>
+                  </MDBRow>
+                </MDBCol>
+              </MDBRow>
+
+              <!-- Botón para agregar una nueva fila -->
+              <MDBRow>
+                <MDBCol col="12" class="text-start">
+                  <MDBBtn color="link" class="mt-3 no-padding" @click="addMaterial">
+                    Agregar otro material +
+                  </MDBBtn>
+                </MDBCol>
+              </MDBRow>
+            </div>
+            
           </MDBCardBody>
-          <MDBCardFooter>
+          <MDBCardFooter class="m-4">
             <MDBRow>
               <MDBCol col="3">
                 <MDBBtn color="link" class="text"><u>Ver procedencia</u></MDBBtn>
@@ -86,8 +169,9 @@
               <MDBCol col="4" class="text-start me-2">
                 <MDBBtn color="link" class="text"><u>Calcular impacto</u></MDBBtn>
               </MDBCol>
-              <MDBCol col="4 ms-5 pe-0 text-end">
-                <MDBBtn color="primary" class="no-padding-blue">Continuar</MDBBtn>
+              <MDBCol col="4" class="ms-5 pe-0 text-end">
+                <MDBBtn color="primary" class="no-padding-blue mx-3" @click="removeStage" :disabled="stage === 0"><span class="mx-3">Volver</span></MDBBtn>
+                <MDBBtn color="primary" class="no-padding-blue" @click="addStage"><span class="mx-1">Continuar</span></MDBBtn>
               </MDBCol>
             </MDBRow>
           </MDBCardFooter>
@@ -95,7 +179,6 @@
       </MDBCol>
     </MDBRow>
   </MDBContainer>
-
 </template>
 <script>
 
@@ -104,6 +187,7 @@ export default {
   components: {},
   data() {
     return {
+      stage: 0,
       materials: [
         {
           name: '',
@@ -127,6 +211,26 @@ export default {
         });
       }else return
     },
+    addStage() {
+      if (this.stage < 3) {
+        this.stage += 1;
+      }
+      console.log(this.stage);
+      
+      if (this.stage === 3) {
+        return;
+      }
+    },
+    removeStage(){
+
+      if (this.stage > 0) {
+        this.stage -= 1;
+      }
+      
+      if (this.stage === 0) {
+        return;
+      }
+    }
   }
 }
 </script>
