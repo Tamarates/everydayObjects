@@ -233,7 +233,6 @@ export default {
     },
     openModal(){
       this.$refs.modalRef.updateContent('¡Aviso! La información que subas aquí será revisada manualmente, por lo que no estará disponible de inmediato.', true)
-      // this.$refs.modalRef.
       this.$refs.modalRef.openModal()
     }
   }

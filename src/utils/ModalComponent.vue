@@ -1,13 +1,14 @@
 <template>
   <div>
-    <MDBModal v-model="modalVisible" :size="isForm ? 'sm' : 'lg'">
-      <MDBModalDialog>
-        <MDBModalHeader style="background-color: #5368F5;">
-          {{ dynamicTitle }}
-        </MDBModalHeader>
+    <MDBModal v-model="modalVisible" :size="isform ? 'sm' : 'lg'">
+      <MDBModalDialog >
+        <MDBModalContent>
+          <MDBModalHeader style="background-color: #5368F5;">
+            {{ dynamicTitle }}
+          </MDBModalHeader>
           <MDBModalBody>
             <div v-if="isform">
-              <p class="font-extra-light-blue-16 text-center">{{ dynamicContent }}</p> 
+              <p class="font-extra-light-blue-16 text-center">{{ dynamicContent }}</p>
             </div>
             <div v-if="!isform">
               <MDBRow>
@@ -15,30 +16,30 @@
                   <img src="/src/assets/alerta.png" alt="">
                 </MDBCol>
                 <MDBCol col="7" class="mt-5">
-                  <p class="font-extra-light-blue-16 text-center">{{ dynamicContent }}</p> 
+                  <p class="font-extra-light-blue-16 text-center">{{ dynamicContent }}</p>
                 </MDBCol>
               </MDBRow>
               <p></p>
             </div>
           </MDBModalBody>
           <MDBModalFooter>
-            <MDBBtn color="primary" v-if="!form" @click="closeModal">Cerrar</MDBBtn>
+            <MDBBtn color="primary" @click="closeModal">Cerrar</MDBBtn>
           </MDBModalFooter>
+        </MDBModalContent>
       </MDBModalDialog>
     </MDBModal>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'ModalComponent',
   data() {
     return {
       modalVisible: false,
-      isform: false,
-      dynamicTitle : '',
-      dynamicTitle2 : '',
+      isform: false, // Controla si el modal es pequeño o grande
+      dynamicTitle: '',
+      dynamicContent: '',
     };
   },
   methods: {
@@ -49,8 +50,8 @@ export default {
       this.modalVisible = false;
     },
     updateContent(content, isform) {
-      this.dynamicContent = content;
-      this.isform = isform;
+      this.dynamicContent = content; // Actualiza el contenido
+      this.isform = isform;          // Cambia el tamaño del modal
     },
     updateTitle(title) {
       this.dynamicTitle = title;
@@ -58,14 +59,9 @@ export default {
   },
 };
 </script>
-<style>
-.less-margin{
-  .modal.show .modal-dialog{
-     margin-top: 36px !important;
-  }
 
-  .modal-header{
-    background-color: #5368F5;
-  }
+<style scoped>
+.modal-header {
+  background-color: #5368F5;
 }
 </style>

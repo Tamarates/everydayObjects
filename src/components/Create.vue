@@ -392,7 +392,6 @@ export default {
     },
     openModal(){
       this.$refs.modalRef.updateContent('¡Aviso! Los resultados obtenidos son una aproximación y no representan cifras exactas, las distancias expresadas poseen un rango de imprecisión en su cálculo. El impacto de un objeto no se expresa en unidades contables, si no que en kilogramos.', false)
-      // this.$refs.modalRef.
       this.$refs.modalRef.openModal()
     }
   },
