@@ -1,4 +1,5 @@
 <template>
+  <ModalComponent ref="modalRef" />
   <MDBContainer fluid>
     <MDBRow>
       <div class="map-container">
@@ -220,21 +221,17 @@
       </div>
     </MDBRow>
   </MDBContainer>
-
-  <ModalComponent ref="modalRef" />
 </template>
 
 <script>
 import ObjectService from '@/services/services.service';
-import ModalComponent from '@/utils/ModalComponent.vue'
-import {ref} from 'vue'
-
-const modalRef = ref();
+import ModalComponent from '@/utils/ModalComponent.vue';
 
 export default {
   name: 'CreateComponent',
-  components: 'ModalComponent',
-
+  components: {
+    ModalComponent
+  },
   data() {
     return {
       iframeContent: `
@@ -299,7 +296,7 @@ export default {
   },
   mounted() {
     this.getObjects();
-    // modalRef.value.openModal()
+    this.openModal()
   },
   methods: {
     async getObjects() {
@@ -393,6 +390,11 @@ export default {
     goToBack() {
       this.created = false;
     },
+    openModal(){
+      this.$refs.modalRef.updateContent('¡Aviso! Los resultados obtenidos son una aproximación y no representan cifras exactas, las distancias expresadas poseen un rango de imprecisión en su cálculo. El impacto de un objeto no se expresa en unidades contables, si no que en kilogramos.', false)
+      // this.$refs.modalRef.
+      this.$refs.modalRef.openModal()
+    }
   },
 };
 </script>

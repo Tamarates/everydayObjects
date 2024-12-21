@@ -1,29 +1,71 @@
 <template>
-  <MDBModal
-    id="exampleModal"
-    tabindex="-1"
-    labelledby="exampleModalLabel"
-    v-model="exampleModal"
-  >
-    <MDBModalHeader>
-      <MDBModalTitle id="exampleModalLabel">Modal Title</MDBModalTitle>
-    </MDBModalHeader>
-    <MDBModalBody>Content of the modal</MDBModalBody>
-    <MDBModalFooter>
-      <MDBBtn color="secondary" @click="exampleModal = false">Close</MDBBtn>
-      <MDBBtn color="primary">Save changes</MDBBtn>
-    </MDBModalFooter>
-  </MDBModal>
+  <div>
+    <MDBModal v-model="modalVisible" :size="isForm ? 'sm' : 'lg'">
+      <MDBModalDialog>
+        <MDBModalHeader style="background-color: #5368F5;">
+          {{ dynamicTitle }}
+        </MDBModalHeader>
+          <MDBModalBody>
+            <div v-if="isform">
+              <p class="font-extra-light-blue-16 text-center">{{ dynamicContent }}</p> 
+            </div>
+            <div v-if="!isform">
+              <MDBRow>
+                <MDBCol col="4">
+                  <img src="/src/assets/alerta.png" alt="">
+                </MDBCol>
+                <MDBCol col="7" class="mt-5">
+                  <p class="font-extra-light-blue-16 text-center">{{ dynamicContent }}</p> 
+                </MDBCol>
+              </MDBRow>
+              <p></p>
+            </div>
+          </MDBModalBody>
+          <MDBModalFooter>
+            <MDBBtn color="primary" v-if="!form" @click="closeModal">Cerrar</MDBBtn>
+          </MDBModalFooter>
+      </MDBModalDialog>
+    </MDBModal>
+  </div>
 </template>
 
-<script setup lang="ts">
-  import { ref } from 'vue';
+<script>
 
-  let exampleModal = ref(false); // Estado para mostrar/ocultar el modal
-
-  // Puedes crear una función para abrir el modal manualmente
-  function openModal() {
-    exampleModal.value = true;
+export default {
+  name: 'ModalComponent',
+  data() {
+    return {
+      modalVisible: false,
+      isform: false,
+      dynamicTitle : '',
+      dynamicTitle2 : '',
+    };
+  },
+  methods: {
+    openModal() {
+      this.modalVisible = true;
+    },
+    closeModal() {
+      this.modalVisible = false;
+    },
+    updateContent(content, isform) {
+      this.dynamicContent = content;
+      this.isform = isform;
+    },
+    updateTitle(title) {
+      this.dynamicTitle = title;
+    },
+  },
+};
+</script>
+<style>
+.less-margin{
+  .modal.show .modal-dialog{
+     margin-top: 36px !important;
   }
 
-</script>
+  .modal-header{
+    background-color: #5368F5;
+  }
+}
+</style>

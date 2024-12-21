@@ -1,4 +1,5 @@
 <template>
+  <ModalComponent class="pt-4" ref="modalRef" />
   <MDBContainer fluid>
     <MDBRow class="justify-content-center mt-5 ms-2 pt-4">
       <MDBCol col="4" class="text-start font-regular-white-14">
@@ -26,10 +27,10 @@
           <MDBCardHeader class="text-center font-light-blue-25 mt-4"  v-if="stage === 0">
             Objeto
           </MDBCardHeader>
-          <MDBCardHeader class="text-center font-light-blue-25"  v-if="stage === 1">
+          <MDBCardHeader class="text-center font-light-blue-25 mt-4"  v-if="stage === 1">
             Materiales Cuerpo
           </MDBCardHeader>
-          <MDBCardHeader class="text-center font-light-blue-25"  v-if="stage === 2">
+          <MDBCardHeader class="text-center font-light-blue-25 mt-4"  v-if="stage === 2">
             Materiales Adicionales
           </MDBCardHeader>
           <MDBCardBody>
@@ -120,9 +121,7 @@
                 </MDBCol>
               </MDBRow>
 
-              <!-- Bucle para renderizar dinámicamente las filas -->
               <MDBRow v-for="(material, index) in materials" :key="index" class="mt-3">
-                <!-- Inputs de Procedencia -->
                 <MDBCol col="6">
                   <MDBRow>
                     <MDBCol col="6">
@@ -134,7 +133,6 @@
                   </MDBRow>
                 </MDBCol>
 
-                <!-- Inputs de Impacto Ambiental -->
                 <MDBCol col="6">
                   <MDBRow>
                     <MDBCol col="4">
@@ -149,8 +147,6 @@
                   </MDBRow>
                 </MDBCol>
               </MDBRow>
-
-              <!-- Botón para agregar una nueva fila -->
               <MDBRow>
                 <MDBCol col="12" class="text-start">
                   <MDBBtn color="link" class="mt-3 no-padding" @click="addMaterial">
@@ -171,7 +167,8 @@
               </MDBCol>
               <MDBCol col="4" class="ms-5 pe-0 text-end">
                 <MDBBtn color="primary" class="no-padding-blue mx-3" @click="removeStage" :disabled="stage === 0"><span class="mx-3">Volver</span></MDBBtn>
-                <MDBBtn color="primary" class="no-padding-blue" @click="addStage"><span class="mx-1">Continuar</span></MDBBtn>
+                <MDBBtn color="primary" class="no-padding-blue" @click="addStage" v-if="stage < 2"><span class="mx-1">Continuar</span></MDBBtn>
+                <MDBBtn color="primary" class="no-padding-blue" v-if="stage === 2" @click="openModal"><span class="mx-1">Continuar</span></MDBBtn>
               </MDBCol>
             </MDBRow>
           </MDBCardFooter>
@@ -181,10 +178,14 @@
   </MDBContainer>
 </template>
 <script>
+import ModalComponent from '@/utils/ModalComponent.vue';
+
 
 export default {
   name: 'UploadComponent',
-  components: {},
+  components: {
+    ModalComponent
+  },
   data() {
     return {
       stage: 0,
@@ -212,14 +213,13 @@ export default {
       }else return
     },
     addStage() {
-      if (this.stage < 3) {
+      if (this.stage <=2 ) {
         this.stage += 1;
       }
-      console.log(this.stage);
       
-      if (this.stage === 3) {
+      if (this.stage === 2) {
         return;
-      }
+      }      
     },
     removeStage(){
 
@@ -230,6 +230,11 @@ export default {
       if (this.stage === 0) {
         return;
       }
+    },
+    openModal(){
+      this.$refs.modalRef.updateContent('¡Aviso! La información que subas aquí será revisada manualmente, por lo que no estará disponible de inmediato.', true)
+      // this.$refs.modalRef.
+      this.$refs.modalRef.openModal()
     }
   }
 }
