@@ -344,17 +344,18 @@ export default {
       } else {
         this.images = '';
         this.haveImage = false;
-      }      
+      }
     },
     async getPercents(list) {
       let percents = await ObjectService.getImpact(list);
+      let quantity = Number(this.cantidad)
       console.log(percents);
 
-      this.total_co2 = Number(percents.total_co2).toFixed(2)
-      this.total_carbon_footprint = Number(percents.total_carbon_footprint).toFixed(2)
-      this.total_diesel = Number(percents.total_diesel).toFixed(2)
-      this.total_diesel_consumption = Number(percents.total_diesel_consumption).toFixed(2)
-      this.total_hydric_footprint =  Number(percents.total_hydric_footprint).toFixed(2)
+      this.total_co2 = (Number(percents.total_co2) * quantity).toFixed(2)
+      this.total_carbon_footprint = (Number(percents.total_carbon_footprint) * quantity).toFixed(2)
+      this.total_diesel = (Number(percents.total_diesel) * quantity).toFixed(2)
+      this.total_diesel_consumption = (Number(percents.total_diesel_consumption) * quantity).toFixed(2)
+      this.total_hydric_footprint =  (Number(percents.total_hydric_footprint) * quantity).toFixed(2)
 
       this.percentCo2 = ((Number(this.total_carbon_footprint) + Number(this.total_co2)) / 14.5 * 100).toFixed(2)
       this.percentWater =  ((this.total_hydric_footprint / 170) * 100).toFixed(2)
