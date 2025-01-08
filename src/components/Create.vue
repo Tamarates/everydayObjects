@@ -297,7 +297,7 @@ export default {
     },
     getMaterialType(index) {
       if (this.materialKey[index]) {
-        return this.materialKey[index].id;  
+        return this.materialKey[index].id;
       }
     },
     async getMaterials(index) {
@@ -367,10 +367,22 @@ export default {
 
       this.materialKey.forEach((key, index) => {
         if (key.id === "material_ids" && Array.isArray(this.materials.material_ids)) {
-          this.materialLists[key.id][index] = this.materials.material_ids.forEach(x => {
-            materialIds.push(x)
+          this.materialLists[key.id][index] = this.materials.material_ids.forEach((x, index) => {
+            let bodyLength = this.materials.body_materials.length
+            if (index < bodyLength) {
+              let material = this.materials.body_materials[index]
+              if (this.selectedMaterials.includes(material)) {
+                materialIds.push(x)
+              }
+            } else {
+              let material = this.materials.detail_materials[index - bodyLength]
+              if (this.selectedMaterials.includes(material)) {
+                materialIds.push(x)
+              }
+            }
+
           })
-          
+
           this.getPercents(materialIds)
         }
       });
