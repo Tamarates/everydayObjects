@@ -360,7 +360,7 @@ export default {
       this.percentCo2 = ((Number(this.total_carbon_footprint) + Number(this.total_co2)) / 14.5 * 100).toFixed(2)
       this.percentWater =  ((this.total_hydric_footprint / 170) * 100).toFixed(2)
       this.percentDiesel = Math.round((Number(this.total_diesel_consumption) + Number(this.total_diesel)) / 0.7 * 100)
-      
+
     },
     goToCreate() {
       const materialIds = []
@@ -482,7 +482,7 @@ option:disabled {
   padding-left: 5px;
   padding-bottom: 10px;
   padding-right: 5px;
-  text-transform: uppercase;  
+  text-transform: uppercase;
 }
 
 
